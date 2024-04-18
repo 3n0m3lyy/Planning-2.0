@@ -1,0 +1,31 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Remplacez "main" par le nom de votre branche principale
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'  # Version de Node.js que vous utilisez dans votre projet
+
+      - name: Install dependencies
+        run: npm install  # Assurez-vous d'adapter cette commande à votre gestionnaire de paquets (npm, yarn, etc.)
+
+      - name: Build and deploy
+        run: |
+          npm run build  # Commande pour construire votre application statique
+          git config --global user.email "mariesrrl@gmail.com"  # Remplacez par votre adresse e-mail GitHub
+          git config --global user.name "Marie SURREL"  # Remplacez par votre nom d'utilisateur GitHub
+          git add .
+          git commit -m "Deploy to GitHub Pages"
+          git push origin main  # Remplacez "main" par le nom de votre branche principale
